@@ -1,12 +1,16 @@
 const express = require("express");
 const router = express.Router();
 
-router.get("/", (req, res) => {
+router.get("/home", (req, res) => {
   res.render("index");
 });
 
-router.get("/sneakers/:id", (req, res) => {
-  res.render("one_product");
+// router.get("/sneakers/:id", (req, res) => {
+//   res.render("one_product");
+// });
+
+router.get("/one-product/:id", (req, res) => {
+  // res.send("baz");
 });
 
 // router.get("/one-product/:id", (req, res) => {

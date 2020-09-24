@@ -15,7 +15,6 @@ const MongoStore = require("connect-mongo")(session);
 const dev_mode = false;
 const logger = require("morgan");
 
-
 // config logger (pour debug)
 app.use(logger("dev"));
 
@@ -27,8 +26,6 @@ hbs.registerPartials(__dirname + "/views/partials");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
-
-
 
 // SESSION SETUP
 app.use(

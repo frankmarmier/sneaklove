@@ -14,7 +14,6 @@ const MongoStore = require("connect-mongo")(session);
 const dev_mode = false;
 const logger = require("morgan");
 
-
 // config logger (pour debug)
 app.use(logger("dev"));
 
@@ -26,8 +25,6 @@ hbs.registerPartials(__dirname + "/views/partials");
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());
-
-
 
 // SESSION SETUP
 app.use(
@@ -43,7 +40,7 @@ app.use(
   })
 );
 
-app.use(require("./routes/auth"))
+app.use(require("./routes/auth"));
 // below, site_url is used in partials/shop_head.hbs to perform ajax request (var instead of hardcoded)
 app.locals.site_url = process.env.SITE_URL;
 

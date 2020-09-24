@@ -23,7 +23,7 @@ router.post("/add", async (req, res, next) => {
   try {
     const newShoe = req.body;
     const createShoe = await Sneaker.create(newShoe);
-    res.redirect("/products_add");
+    res.redirect("/dashboard");
   } catch (error) {
     next(error);
   }

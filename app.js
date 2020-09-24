@@ -21,13 +21,13 @@ app.use(logger("dev"));
 
 // initial config
 app.set("view engine", "hbs");
-app.set("views", __dirname + "/view");
+app.set("views", __dirname + "/views");
 app.use(express.static("public"));
-hbs.registerPartials(__dirname + "/views/partials");
+hbs.registerPartials(__dirname + "/views/partial");
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());
-
+/*
 // SESSION SETUP
 app.use(
   session({
@@ -41,14 +41,14 @@ app.use(
     resave: true,
   })
 );
-
+*/
 // below, site_url is used in partials/shop_head.hbs to perform ajax request (var instead of hardcoded)
 app.locals.site_url = process.env.SITE_URL;
 
 app.use(flash());
 
 // CUSTOM MIDDLEWARES
-
+/*
 if (dev_mode === true) {
   app.use(require("./middlewares/devMode")); // triggers dev mode during dev phase
   app.use(require("./middlewares/debugSessionInfos")); // displays session debug
@@ -56,10 +56,11 @@ if (dev_mode === true) {
 
 app.use(require("./middlewares/exposeLoginStatus"));
 app.use(require("./middlewares/exposeFlashMessage"));
-
+*/
 // routers
 app.use("/", require("./routes/index"));
-app.use("/", require("./routes/auth"));
-app.use("/", require("./routes/dashboard_sneaker"));
+//app.use(require("./routes/index"));
+//app.use("/", require("./routes/auth"));
+//app.use("/", require("./routes/dashboard_sneaker"));
 
 module.exports = app;

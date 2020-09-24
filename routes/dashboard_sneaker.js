@@ -3,7 +3,11 @@ const router = new express.Router(); // create an app sub-module (router)
 
 const Sneaker = require("../models/Sneaker");
 
-router.get("/collection", async (req, res, next) => {
+router.get("/create", (req, res, next) => {
+  res.render("products_add");
+});
+
+router.get("/manage", async (req, res, next) => {
   try {
     const sneakers = await Sneaker.find();
     res.render("products_manage", { sneakers });
@@ -12,12 +16,23 @@ router.get("/collection", async (req, res, next) => {
   }
 });
 
+router.post("/create", async (req, res, next) => {
+  try {
+    const newSneaker = req.body;
+    console.log(newSneaker);
+    await Sneaker.create(newSneaker);
+    res.redirect("/sneakers/manage");
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.get("/:id/delete", async (req, res, next) => {
   try {
     const sneakerToDelete = req.params.id;
     console.log(sneakerToDelete);
     await Sneaker.findByIdAndDelete(sneakerToDelete);
-    res.redirect("/sneakers/collection");
+    res.redirect("/sneakers/manage");
   } catch (err) {
     next(err);
   }
@@ -33,7 +48,7 @@ router.post("/:id/edit", async (req, res, next) => {
     const sneakerId = req.params.id;
     const newSneakerValue = req.body;
     await Sneaker.findByIdAndUpdate(sneakerId, newSneakerValue);
-    res.redirect("/sneakers/collection");
+    res.redirect("/sneakers/manage");
   } catch (err) {
     next(err);
   }

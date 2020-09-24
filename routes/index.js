@@ -10,7 +10,7 @@ router.get("/sneakers/:id", (req, res) => {
 });
 
 router.get("/one-product/:id", (req, res) => {
-  res.send("baz");
+  // res.send("baz");
 });
 
 router.get("/signup", (req, res) => {

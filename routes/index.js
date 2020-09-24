@@ -24,8 +24,16 @@ router.get("/sneakers/:id", async(req, res, next) => {
   }
 });
 
-router.get("/one-product/:id", (req, res) => {
-  res.render("one_product");
+router.get("/one-product/:id", async (req, res, next) => {
+try{
+  const sneakerId = req.params.id;
+  const oneSneaker = await Sneaker.findById(sneakerId);
+  res.render("one_product", {sneaker: oneSneaker});
+}catch (error){
+  next(error);
+
+}
+  
 });
 
 router.get("/signup", (req, res) => {

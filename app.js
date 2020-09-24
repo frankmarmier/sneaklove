@@ -1,3 +1,5 @@
+throw new Error("wax on, wax off");
+
 require("dotenv").config();
 require("./config/mongodb"); // database initial setup
 require("./helpers/hbs"); // utils for hbs templates
@@ -57,6 +59,5 @@ app.use(require("./middlewares/exposeFlashMessage"));
 
 // routers
 app.use("/", require("./routes/index"));
-
 
 module.exports = app;

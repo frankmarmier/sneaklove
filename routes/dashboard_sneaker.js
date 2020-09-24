@@ -4,9 +4,26 @@ const Sneaker = require("../models/Sneaker");
 
 router.get("/", async (req, res, next) => {
   try {
-    console.log("hey");
     const dashShoes = await Sneaker.find();
     res.render("products_manage", { shoes: dashShoes });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get("/add", async (req, res, next) => {
+  try {
+    res.render("products_add");
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post("/add", async (req, res, next) => {
+  try {
+    const newShoe = req.body;
+    const createShoe = await Sneaker.create(newShoe);
+    res.redirect("/products_add");
   } catch (error) {
     next(error);
   }

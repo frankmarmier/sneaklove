@@ -1,4 +1,3 @@
-
 require("dotenv").config();
 require("./config/mongodb"); // database initial setup
 require("./helpers/hbs"); // utils for hbs templates
@@ -20,7 +19,7 @@ app.use(logger("dev"));
 
 // initial config
 app.set("view engine", "hbs");
-app.set("views", __dirname + "/view");
+app.set("views", __dirname + "/views");
 app.use(express.static("public"));
 hbs.registerPartials(__dirname + "/views/partials");
 app.use(express.urlencoded({ extended: false }));
@@ -58,7 +57,5 @@ app.use(require("./middlewares/exposeFlashMessage"));
 
 // routers
 app.use("/", require("./routes/index"));
-
-
 
 module.exports = app;

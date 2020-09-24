@@ -37,16 +37,31 @@ router.get("/", async (req, res) => {
 });
 
 // U
+router.get("/product-edit/:id", async (req, res, next) => {
+    res.render("product_edit", { sneaker: await Sneaker.findById(req.params.id) });
+});
+
+router.post("/edit/:id", async (req, res, next) => {
+      const updatedSneaker = req.body;  
+      console.log(updatedSneaker);
+      try {
+        await Sneaker.findByIdAndUpdate(req.params.id, updatedSneaker);
+        res.redirect("/dashboard");
+      } catch (error) {
+        next(error); // Sends us to the error handler middleware in app.js if an error occurs
+      }
+      //
+    }
+  );
 
 // D
 router.get("/product-delete/:id", async (req, res, next) => {
   try {
     console.log(req.params);
     await Sneaker.findByIdAndRemove(req.params.id);
-    res.redirect("/");
-  }
-  catch(err) {
-      next(err)
+    res.redirect("/dashboard");
+  } catch (err) {
+    next(err);
   }
 });
 

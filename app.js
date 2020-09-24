@@ -1,4 +1,3 @@
-
 require("dotenv").config();
 require("./config/mongo"); // database initial setup
 require("./helpers/hbs"); // utils for hbs templates
@@ -20,8 +19,8 @@ app.use(logger("dev"));
 
 // initial config
 app.set("view engine", "hbs");
-app.set('views', './src/views')
-app.set("views",__dirname + "/views");
+app.set("views", "./src/views");
+app.set("views", __dirname + "/views");
 app.use(express.static("public"));
 hbs.registerPartials(__dirname + "/views/partial");
 app.use(express.urlencoded({ extended: false }));

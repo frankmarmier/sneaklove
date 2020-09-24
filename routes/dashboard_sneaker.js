@@ -1,10 +1,11 @@
 const express = require("express"); // import express in this module
 const router = new express.Router(); // create an app sub-module (router)
 const Sneaker = require("../models/Sneaker");
+const Tag = require("../models/Tag");
 
 router.get("/prod-manage", async (req, res, next) => {
   try {
-    const dashShoes = await Sneaker.find();
+    const dashShoes = await Sneaker.find().populate("Tags");;
     res.render("products_manage", { sneakers: dashShoes });
   } catch (error) {
     next(error);
@@ -13,7 +14,9 @@ router.get("/prod-manage", async (req, res, next) => {
 
 router.get("/prod-add", async (req, res, next) => {
   try {
-    res.render("products_add");
+    const tagDocuments = await Tag.find();
+    console.log(tagDocuments);
+    res.render("products_add", {tags : tagDocuments});
   } catch (error) {
     next(error);
   }
@@ -22,7 +25,6 @@ router.get("/prod-add", async (req, res, next) => {
 router.post("/prod-add", async (req, res, next) => {
   try {
     const newShoe = req.body;
-    console.log(newShoe);
     const createShoe = await Sneaker.create(newShoe);
     res.redirect("/prod-manage");
   } catch (error) {
@@ -61,5 +63,17 @@ router.post("/product-edit/:id", async (req, res, next) => {
     next(error);
   }
 });
+
+
+router.post("/tag-add", async (req, res, next) => {
+  try {
+    const newTag = req.body;
+    const createTag = await Tag.create(newTag);
+    res.redirect("prod-add");
+  } catch (error) {
+    next(error);
+  }
+});
+
 
 module.exports = router;

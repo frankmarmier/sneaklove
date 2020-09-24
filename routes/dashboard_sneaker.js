@@ -53,4 +53,8 @@ router.post ("/prod-add", async(req, res, next)=>{
     }
 });
 
+router.get ("/prod-manage", async (req, res, next)=>{
+    res.render("products_manage");
+});
+
 module.exports = router;

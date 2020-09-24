@@ -54,14 +54,11 @@ router.post("/signup", async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-  //   res.render("auth/signup.hbs");
 });
 
 router.get("/logout", async (req, res, next) => {
   console.log(req.session.currentUser);
   req.session.destroy(function (err) {
-    // cannot access session here
-    // console.log(req.session.currentUser);
     res.redirect("/auth/signin");
   });
 });

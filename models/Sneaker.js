@@ -6,8 +6,11 @@ const sneakerSchema = new mongoose.Schema({
   size: Number,
   description: String,
   price: Number,
-  category: String[(men, women, kids)],
-  id_tags: [ObjectId],
+  category: {
+      type: String,
+      enum: ["men", "women", "kids"]
+  },
+//   id: "mongoose.ObjectIds",
 });
 
 const SneakerModel = mongoose.model("Sneaker", sneakerSchema);

@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
 const SneakerSchema = new mongoose.Schema({
   name: String,
@@ -6,8 +7,11 @@ const SneakerSchema = new mongoose.Schema({
   size: Number,
   description: String,
   price: Number,
-  category: String[(men, women, kids)],
-  id_tags: [ObjectId],
+  id_tags: { type: Schema.Types.ObjectId, ref: "Tag" },
+  category: {
+    type: String,
+    enum: ["men", "women", "kids"],
+  }
 });
 
 const SneakerModel = mongoose.model("sneakers", SneakerSchema);

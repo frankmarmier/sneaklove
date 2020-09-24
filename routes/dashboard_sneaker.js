@@ -12,4 +12,15 @@ router.get("/collection", async (req, res, next) => {
   }
 });
 
+router.get("/:id/delete", async (req, res, next) => {
+  try {
+    const sneakerToDelete = req.params.id;
+    console.log(sneakerToDelete);
+    await Sneaker.findByIdAndDelete(sneakerToDelete);
+    res.redirect("/sneakers/collection")
+  } catch (err) {
+    next(err);
+  }
+});
+
 module.exports = router;

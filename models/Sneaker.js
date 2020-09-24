@@ -10,8 +10,8 @@
         size: Number,
         description: String,
         price: Number,
-        category: String [men, women, kids],
-        id_tags: [ObjectId]
+        category: {type: String, enum: ["men", "women", "kids"] },
+        id_tags: [String]
     
     });
     const Sneaker = mongoose.model("Sneaker", sneakerSchema);

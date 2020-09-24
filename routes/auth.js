@@ -56,10 +56,22 @@ router.post("/signin", async (req, res, next) => {
             req.flash("error", "invalid credentials");
             res.redirect("/signin")
         } else {
-            const userDocument = {...findUser}
+            const userDocument = {...findUser};
             const userObject = findUser.toObject();
-        }
-    }
+            delete userObject.password;
+
+            req.session.currentUser = userObject;
+            req.flash("success", "You logged in !")
+            res.redirect("/")
+        };
+    };
+});
+
+router.get("/logout", (req, res, next) => {
+    // console.log(req.session.currentUser)
+    req.session.destroy(function(err){
+        res.redirect("/signin")
+    })
 })
 
 

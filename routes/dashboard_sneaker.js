@@ -5,7 +5,7 @@ const Sneaker = require("../models/Sneaker");
 router.get("/", async (req, res, next) => {
   try {
     const dashShoes = await Sneaker.find();
-    res.render("products_manage", { shoes: dashShoes });
+    res.render("products_manage", { sneakers: dashShoes });
   } catch (error) {
     next(error);
   }
@@ -28,6 +28,18 @@ router.post("/add", async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+});
+
+router.get("/product-delete/:id", (req, res, next) => {
+  console.log("toto");
+  const SneakerId = req.params.id;
+  Sneaker.findByIdAndDelete(SneakerId)
+    .then((dbResult) => {
+      res.redirect("/");
+    })
+    .catch((error) => {
+      next(error);
+    });
 });
 
 module.exports = router;

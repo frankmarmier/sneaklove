@@ -38,6 +38,19 @@ const Sneaker = require("../models/Sneaker");
     }
   });
 
+router.get ("/prod-add", async (req, res, next)=>{
+    res.render("products_add");
+})
 
+router.post ("/prod-add", async(req, res, next)=>{
+    try{
+        const newSneaker = await Sneaker.create(req.body);
+        res.redirect("/sneakers/collection");
+        
+    }
+    catch(error){
+        next(error)
+    }
+});
 
 module.exports = router;

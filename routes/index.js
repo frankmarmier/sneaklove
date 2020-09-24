@@ -18,7 +18,7 @@ router.get("/one-product/:id", async (req, res) => {
   const sneaker = await Sneaker.find({ _id: req.params.id })
   res.render('one_product', { sneaker : sneaker[0] });
 });
-
+/*
 router.get("/signup", (req, res) => {
   res.send("signup");
 });
@@ -26,7 +26,7 @@ router.get("/signup", (req, res) => {
 router.get("/signin", (req, res) => {
   res.send("");
 });
-
+*/
 
 
 module.exports = router;

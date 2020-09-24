@@ -54,7 +54,35 @@ router.post ("/prod-add", async(req, res, next)=>{
 });
 
 router.get ("/prod-manage", async (req, res, next)=>{
-    res.render("products_manage");
+    try{
+
+        const sneakers = await Sneaker.find();
+        res.render("products_manage", {sneakers});
+       
+
+    }
+    catch(error){
+        next(error)
+    }
+
 });
+
+router.get ("/:id/delete", async (req, res, next) => {
+try{
+ const sneakerId = req.params.id;
+
+ await Sneaker.findByIdAndDelete(sneakerId);
+ res.redirect("/prod-manage");
+
+}catch(error){
+    next(error)
+}
+
+});
+
+
+
+
+
 
 module.exports = router;

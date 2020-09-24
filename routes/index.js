@@ -14,7 +14,7 @@ router.get("/", (req, res) => {
   res.render("index");
 });
 
-router.get("/sneakers/:id", async(req, res, next) => {
+router.get("/sneakers/collection", async(req, res, next) => {
   try {
     const sneakers = await Sneaker.find();
     res.render("products", {sneakers});
@@ -35,6 +35,8 @@ try{
 }
   
 });
+
+
 
 router.get("/signup", (req, res) => {
   res.send("signup");

@@ -7,4 +7,15 @@ router.get("/create", (req, res, next) => {
   res.render("products_add");
 });
 
+router.post("/create", async (req, res, next) => {
+  try {
+    const newSneaker = req.body;
+    console.log(newSneaker);
+    await Sneaker.create(newSneaker);
+    res.redirect("collection");
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = router;

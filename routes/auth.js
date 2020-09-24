@@ -16,21 +16,16 @@ router.post("/signin", async (req, res, next) => {
   console.log(email, password);
 
   if (!foundUser) {
-    console.log("user not found");
-    req.flash("error", "Invalid credentials");
     res.redirect("/signup");
   } else {
     const isSamePassword = bcrypt.compareSync(password, foundUser.password);
     if (!isSamePassword) {
-      req.flash("error", "Invalid credentials");
-      res.redirect("/signin");
+      res.render("signin", {error: "Invalid credentials"});
     } else {
       const userDocument = { ...foundUser };
-      console.log(userDocument);
       const userObject = foundUser.toObject();
-      delete userObject.password; // remove password before
-      req.session.currentUser = userObject; // Stores the user in
-      req.flash("success", "Successfully logged in...");
+      delete userObject.password; 
+      req.session.currentUser = userObject; 
       res.redirect("/");
     }
   }

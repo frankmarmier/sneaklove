@@ -1,6 +1,7 @@
 require("dotenv").config();
 require("./config/mongo"); // database initial setup
 require("./helpers/hbs"); // utils for hbs templates
+const path = require('path');
 
 // base dependencies
 const express = require("express");
@@ -18,10 +19,11 @@ const logger = require("morgan");
 app.use(logger("dev"));
 
 // initial config
+app.use(express.static(__dirname + "/public"));
 app.set("view engine", "hbs");
-app.set("views", __dirname + "/view");
-app.use(express.static("public"));
+app.set("views", __dirname + "/views");
 hbs.registerPartials(__dirname + "/views/partials");
+
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());

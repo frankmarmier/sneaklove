@@ -25,7 +25,6 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./bin/www",
     "dev": "nodemon ./bin/www -e js,hbs"
-    
   },
   "keywords": [],
   "author": "",

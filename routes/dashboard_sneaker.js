@@ -15,7 +15,6 @@ router.get("/prod-manage", async (req, res, next) => {
 router.get("/prod-add", async (req, res, next) => {
   try {
     const tagDocuments = await Tag.find();
-    console.log(tagDocuments);
     res.render("products_add", {tags : tagDocuments});
   } catch (error) {
     next(error);
@@ -45,10 +44,11 @@ router.get("/product-delete/:id", (req, res, next) => {
 
 router.get("/product-edit/:id", async (req, res, next) => {
   try {
+    const tagDocuments = await Tag.find();
     const sneakerId = req.params.id;
     dbresult = await Sneaker.findById(sneakerId);
     Sneaker.findByIdAndUpdate(sneakerId);
-    res.render("product_edit", { sneaker: dbresult });
+    res.render("product_edit", { sneaker: dbresult, tags : tagDocuments});
   } catch (error) {
     next(error);
   }

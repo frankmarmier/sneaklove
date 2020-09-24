@@ -5,6 +5,7 @@ require("./helpers/hbs"); // utils for hbs templates
 // base dependencies
 const express = require("express");
 const app = express();
+const path = require("path")
 const cookieParser = require("cookie-parser");
 const flash = require("connect-flash");
 const hbs = require("hbs");
@@ -23,7 +24,7 @@ app.set("view engine", "hbs");
 app.set("views", __dirname + "/views");
 app.use(express.static("public"));
 hbs.registerPartials(__dirname + "/views/partials");
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 
@@ -43,7 +44,6 @@ app.use(
   })
 );
 
-app.use(require("./routes/auth"))
 // below, site_url is used in partials/shop_head.hbs to perform ajax request (var instead of hardcoded)
 app.locals.site_url = process.env.SITE_URL;
 
@@ -62,5 +62,6 @@ app.use(require("./middlewares/exposeFlashMessage"));
 // routers
 app.use("/", require("./routes/index"));
 app.use("/sneakers", require("./routes/sneakers"));
+app.use(require("./routes/auth"))
 
 module.exports = app;

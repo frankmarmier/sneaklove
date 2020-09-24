@@ -22,6 +22,7 @@ router.get("/add", async (req, res, next) => {
 router.post("/add", async (req, res, next) => {
   try {
     const newShoe = req.body;
+    console.log(newShoe);
     const createShoe = await Sneaker.create(newShoe);
     res.redirect("/dashboard");
   } catch (error) {

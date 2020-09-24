@@ -1,4 +1,3 @@
-throw new Error("wax on, wax off");
 
 require("dotenv").config();
 require("./config/mongodb"); // database initial setup
@@ -9,7 +8,7 @@ const express = require("express");
 const app = express();
 const cookieParser = require("cookie-parser");
 const flash = require("connect-flash");
-const hbo = require("hbs");
+const hbs = require("hbs");
 const mongoose = require("mongoose");
 const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
@@ -59,5 +58,7 @@ app.use(require("./middlewares/exposeFlashMessage"));
 
 // routers
 app.use("/", require("./routes/index"));
+
+
 
 module.exports = app;

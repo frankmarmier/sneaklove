@@ -14,6 +14,7 @@ const MongoStore = require("connect-mongo")(session);
 const dev_mode = false;
 const logger = require("morgan");
 
+
 // config logger (pour debug)
 app.use(logger("dev"));
 
@@ -25,6 +26,16 @@ hbs.registerPartials(__dirname + "/views/partials");
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());
+
+app.use(
+  session({
+    store: new MongoStore({ mongooseConnection: mongoose.connection }),
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+    cookie: {},
+  })
+);
 
 // SESSION SETUP
 app.use(
@@ -58,5 +69,6 @@ app.use(require("./middlewares/exposeFlashMessage"));
 // routers
 app.use("/", require("./routes/index"));
 app.use("/sneakers", require("./routes/sneakers"));
+app.use(require("./routes/auth"))
 
 module.exports = app;

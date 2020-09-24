@@ -1,7 +1,7 @@
 require("dotenv").config();
 require("./config/mongo"); // database initial setup
 require("./helpers/hbs"); // utils for hbs templates
-const path = require('path');
+const path = require("path");
 
 // base dependencies
 const express = require("express");
@@ -41,6 +41,8 @@ app.use(
     resave: true,
   })
 );
+
+app.use("/dashboard", require("./routes/dashboard_sneaker"));
 
 // below, site_url is used in partials/shop_head.hbs to perform ajax request (var instead of hardcoded)
 app.locals.site_url = process.env.SITE_URL;

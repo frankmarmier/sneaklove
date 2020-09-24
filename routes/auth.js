@@ -9,17 +9,17 @@ router.post("/signup", async (req, res, next) => {
     try {
     
     const newUser = req.body;
+    // console.log(newUser)
 
     const foundUser = await UserModel.find({email: newUser.email})
-    
 
     if (foundUser) {
-        res.render("signup.hbs", {error : "Invalid credentials"})
+        res.render("signup.hbs", {error : "Email Already exist"})
     } else {
         const hashPassword = bcrypt.hashSync(newUser.password, salt);
         newUser.password = hashPassword;
         const user = await UserModel.create(newUser);
-        console.log(newUser);
+        console.log(user);
         res.redirect("/signin");
     }
     } catch(err){

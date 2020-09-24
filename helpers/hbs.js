@@ -18,37 +18,37 @@ awesome, 1 is less thant 10 !!!
 
 */
 
-hbs.registerHelper("compare", function(lvalue, rvalue, options) {
+hbs.registerHelper("compare", function (lvalue, rvalue, options) {
   if (arguments.length < 3)
     throw new Error("Handlerbars Helper 'compare' needs 2 parameters");
 
   var operator = options.hash.operator || "==";
 
   var operators = {
-    "==": function(l, r) {
+    "==": function (l, r) {
       return l == r;
     },
-    "===": function(l, r) {
+    "===": function (l, r) {
       return l === r;
     },
-    "!=": function(l, r) {
+    "!=": function (l, r) {
       return l != r;
     },
-    "<": function(l, r) {
+    "<": function (l, r) {
       return l < r;
     },
-    ">": function(l, r) {
+    ">": function (l, r) {
       return l > r;
     },
-    "<=": function(l, r) {
+    "<=": function (l, r) {
       return l <= r;
     },
-    ">=": function(l, r) {
+    ">=": function (l, r) {
       return l >= r;
     },
-    typeof: function(l, r) {
+    typeof: function (l, r) {
       return typeof l == r;
-    }
+    },
   };
 
   if (!operators[operator])
@@ -66,8 +66,12 @@ hbs.registerHelper("compare", function(lvalue, rvalue, options) {
 });
 
 hbs.registerHelper("isSameId", function (value1, value2, options) {
-  if (value1.toString() === value2.toString()) {
-    return options.fn(this);
+  if (value2) {
+    if (value1.toString() === value2.toString()) {
+      return options.fn(this);
+    } else {
+      return options.inverse(this);
+    }
   } else {
     return options.inverse(this);
   }

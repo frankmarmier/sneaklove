@@ -6,7 +6,7 @@ const Tag = require("../models/Tag");
 
 router.get("/prod-manage", async (req, res, next) => {
   try {
-    const dashShoes = await Sneaker.find().populate("Tags");
+    const dashShoes = await Sneaker.find();
     res.render("products_manage", { sneakers: dashShoes });
   } catch (error) {
     next(error);
@@ -54,7 +54,7 @@ router.get("/product-edit/:id", async (req, res, next) => {
   try {
     const tagDocuments = await Tag.find();
     const sneakerId = req.params.id;
-    dbresult = await Sneaker.findById(sneakerId);
+    dbresult = await Sneaker.findById(sneakerId).populate("Tag");
     Sneaker.findByIdAndUpdate(sneakerId);
     res.render("product_edit", { sneaker: dbresult, tags: tagDocuments });
   } catch (error) {

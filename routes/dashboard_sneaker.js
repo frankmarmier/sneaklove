@@ -1,15 +1,15 @@
-const express = require("express"); // import express in this module
-const router = express.Router(); // create an app sub-module (router)
+const express = require("express"); 
+const router = express.Router(); 
 const Sneaker = require("../models/Sneaker");
 const uploader = require("../config/cloudinary");
 const Tag = require("../models/Tag");
+const protectPrivateRoute = require('../middlewares/protectPrivateRoute')
 
-router.get("/create",async (req, res, next) => {
+router.get("/create", protectPrivateRoute, async (req, res, next) => {
   res.render("products_add", { tags: await Tag.find() });
 });
 
-// C
-router.post("/prod-add", uploader.single("image"), async (req, res, next) => {
+router.post("/prod-add", protectPrivateRoute, uploader.single("image"), async (req, res, next) => {
   try {
     const newSneaker = req.body;
     console.log(req);
@@ -26,19 +26,19 @@ router.post("/prod-add", uploader.single("image"), async (req, res, next) => {
 });
 
 // R
-router.get("/", async (req, res) => {
+router.get("/", protectPrivateRoute, async (req, res) => {
   res.render("products_manage", { sneakers: await Sneaker.find() });
 });
 
 // U
-router.get("/product-edit/:id", async (req, res, next) => {
+router.get("/product-edit/:id", protectPrivateRoute, async (req, res, next) => {
   res.render("product_edit", {
     sneaker: await Sneaker.findById(req.params.id),
     tags: await Tag.find(),
   });
 });
 
-router.post("/edit/:id", async (req, res, next) => {
+router.post("/edit/:id", protectPrivateRoute, async (req, res, next) => {
   const updatedSneaker = req.body;
   try {
     await Sneaker.findByIdAndUpdate(req.params.id, updatedSneaker);
@@ -50,7 +50,7 @@ router.post("/edit/:id", async (req, res, next) => {
 });
 
 // D
-router.get("/product-delete/:id", async (req, res, next) => {
+router.get("/product-delete/:id", protectPrivateRoute, async (req, res, next) => {
   try {
     console.log(req.params);
     await Sneaker.findByIdAndRemove(req.params.id);
@@ -61,7 +61,7 @@ router.get("/product-delete/:id", async (req, res, next) => {
 });
 
 // TAG 
-router.post("/tag-add", async (req, res, next) => {
+router.post("/tag-add", protectPrivateRoute, async (req, res, next) => {
   try {
     await Tag.create(req.body);
     res.redirect("/dashboard/create");

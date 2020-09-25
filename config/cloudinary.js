@@ -12,8 +12,8 @@ cloudinary.config({
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
-    folder: "foo",
-    // allowedFormats: ["jpg", "png"], // Specify the allowed formats for your uploaded files
+    folder: "sneaker-pics",
+    //allowedFormats: ["jpg", "png"], // Specify the allowed formats for your uploaded files
     format: async (req, file) => {
       // Format your file into jpeg/png etc...
       // async code using `req` and `file`

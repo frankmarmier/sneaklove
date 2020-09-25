@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 const sneakerSchema = new Schema({
   name: String,
+  image: String,
   ref: String,
   size: Number,
   description: String,

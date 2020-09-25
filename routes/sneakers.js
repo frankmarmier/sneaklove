@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Sneaker = require("../models/Sneaker");
+const fileUploader = require("../config/cloudinary");
 
 router.get("/collection", async (req, res) => {
   const dbResult = await Sneaker.find();

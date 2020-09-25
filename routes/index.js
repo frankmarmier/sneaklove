@@ -54,10 +54,24 @@ router.get("/prod-manage", async (req, res, next) => {
 router.get("/product-edit/:id", async (req, res, next) => {
   try {
     const dbResult = await Sneaker.findById(req.params.id);
-    res.render("product_edit", { sneakers: dbResult });
+    res.render("product_edit", { sneaker: dbResult });
   } catch (error) {
     next(error);
   }
 });
 
+router.post("/prod-edit/:id", fileUploader.single("image"), async (req, res, next) => {
+  const updatedSneaker = req.body;
+  if (req.file) {
+    updatedSneaker.image = req.file.path;
+  }
+  console.log(updatedSneaker);
+  try{
+    const dbres = await Sneaker.findByIdAndUpdate(req.params.id, updatedSneaker)
+    console.log(dbres);
+    res.redirect("/prod-manage")
+  } catch(err) {
+    next(err)
+  }
+})
 module.exports = router;

@@ -1,5 +1,9 @@
 <select name="id_tags" id="tags" class="select">
-    <option value="-1"> {{sneaker.id_tags.label}}</option>
+    {{#if sneaker}}
+    <option value="-1" disabled selected> {{sneaker.id_tags.label}}</option>
+    {{else}}
+    <option value="-1" disabled selected> Select a label </option>
+    {{/if}}
     {{#each tags}}
     <option value="{{this._id}}">{{this.label}}</option>
     {{/each}}

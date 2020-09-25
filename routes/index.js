@@ -3,6 +3,10 @@ const SneakerModel = require("../models/Sneaker");
 const router = express.Router();
 const uploader = require("../config/cloudinary");
 const TagModel = require("../models/Tag");
+const UserModel = require("../models/User");
+const bcrypt = require("bcrypt");
+
+const salt = 10;
 
 router.get("/", async (req, res) => {
   res.render("index");
@@ -46,8 +50,9 @@ router.post("/prod-add", uploader.single("image"), async (req, res, next) => {
 router.get("/sneakers/collection", async (req, res) => {
   try {
     const sneakers = await SneakerModel.find();
+     const tags = await TagModel.find();
     console.log("this is sneakers" + sneakers);
-    res.render("products", { sneakers: sneakers });
+    res.render("products", { sneakers: sneakers, tags: tags });
   } catch (error) {
     console.log(error);
   }
@@ -115,8 +120,53 @@ router.get("/signup", (req, res) => {
   res.render("signup");
 });
 
+router.post("/addUser", async (req, res, next) => {
+  try {
+    const newUser = req.body;
+
+    const foundUser = await UserModel.findOne({ email: newUser.email });
+
+    if (foundUser) {
+      res.render("signup", { error: "Email already taken" });
+    } else {
+      const hashedPassword = bcrypt.hashSync(newUser.password, salt);
+      newUser.password = hashedPassword;
+      const user = await UserModel.create(newUser);
+      res.redirect("/signin");
+    }
+  } catch (error) {
+    next(error);
+  }
+  //   res.render("auth/signup.hbs");
+});
+
 router.get("/signin", (req, res) => {
   res.render("signin");
+});
+
+
+router.post("/signin", async (req, res, next) => {
+  const { email, password } = req.body;
+  const foundUser = await UserModel.findOne({ email: email });
+  console.log(foundUser);
+  if (!foundUser) {
+    req.flash("error", "Invalid credentials");
+    res.redirect("/auth/signin");
+  } else {
+    const isSamePassword = bcrypt.compareSync(password, foundUser.password);
+    if (!isSamePassword) {
+      req.flash("error", "Invalid credentials");
+      res.redirect("/signin");
+    } else {
+      const userDocument = { ...foundUser };
+      console.log(userDocument);
+      const userObject = foundUser.toObject();
+      delete userObject.password; 
+      req.session.currentUser = userObject; 
+      req.flash("success", "Successfully logged in...");
+      res.redirect("/sneakers/collection");
+    }
+  }
 });
 
 router.post("/createTag", async (req, res) => {

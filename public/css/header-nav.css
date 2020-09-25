@@ -80,3 +80,27 @@ h2.logo-item {
   cursor: pointer;
   transition: all 0.2s ease-in;
 }
+
+@media only screen and (max-width: 600px) {
+  .header {
+    width: 100vh;
+    max-width: 100%;
+  }
+
+  .nav-wrapper {
+    height: auto;
+  }
+
+  .nav-link, .nav-end {
+    align-items: flex-end;
+  }
+  .nav-item, .nav-end > * {
+    margin-right: 0;
+    margin-bottom: 0.5rem;
+  }
+
+  .nav-end-item:first-child {
+    margin-right: 0;
+}
+
+}

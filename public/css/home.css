@@ -7,3 +7,9 @@
   background-size: contain;
   background-repeat: no-repeat;
 }
+
+@media only screen and (max-width: 600px) {
+  .home-container {
+    background-position: center;
+  }
+} 

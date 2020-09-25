@@ -27,8 +27,8 @@ hbs.registerPartials(__dirname + "/views/partial");
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());
-/*
-// SESSION SETUP
+
+ //SESSION SETUP
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
@@ -41,11 +41,19 @@ app.use(
     resave: true,
   })
 );
-*/
-// below, site_url is used in partials/shop_head.hbs to perform ajax request (var instead of hardcoded)
+
+// // below, site_url is used in partials/shop_head.hbs to perform ajax request (var instead of hardcoded)
 app.locals.site_url = process.env.SITE_URL;
 
 app.use(flash());
+
+
+app.use(function (req, res, next) {
+  res.locals.error_message = req.flash("error");
+  res.locals.success_message = req.flash("success");
+  next();
+});
+
 
 // CUSTOM MIDDLEWARES
 /*

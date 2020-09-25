@@ -2,7 +2,6 @@ const express = require("express");
 const router = new express.Router();
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
-
 const salt = 10;
 
 
@@ -20,7 +19,8 @@ router.get("/signup", (req, res) => {
       const foundUser = await User.findOne({ email: newUser.email });
   
       if (foundUser) {
-        res.render("signup", { error: "Email already taken" });
+        req.flash("error", "This email is taken");
+        res.redirect("/signup");
       } else {
         const hashedPassword = bcrypt.hashSync(newUser.password, salt);
         newUser.password = hashedPassword;
@@ -51,27 +51,26 @@ router.get("/signup", (req, res) => {
     if (!foundUser) {
      
       req.flash("error", "Invalid credentials");
-    //   res.redirect("/signin");
-      res.render("signin", { error: "Invalid credentials" });
+      res.redirect("/signin");
+ 
+
+    //   res.render("signin");
     } else {
       const isSamePassword = bcrypt.compareSync(password, foundUser.password);
       if (!isSamePassword) {
-        // Display an error message telling the user that either the password
-        // or the email is wrong
+      
         req.flash("error", "Invalid credentials");
-        // res.redirect("/signin");
-        res.render("signin", { error: "Invalid credentials" });
+        res.redirect("/signin");
+        // res.render("signin");
       } else {
-        //
-        // Authenticate the user...
+    
         const userDocument = { ...foundUser };
-        console.log(userDocument);
+        // console.log(userDocument);
         const userObject = foundUser.toObject();
         delete userObject.password; // remove password before saving user in session
-        // console.log(req.session, "before defining current user");
+        console.log(req.session, "before defining current user");
         req.session.currentUser = userObject; // Stores the user in the session
-        // console.log(req.session, "AFTER defining current user");
-        // req.flash("success", "Successfully logged in...");
+       
         const isLoggedIn = true;
        
        

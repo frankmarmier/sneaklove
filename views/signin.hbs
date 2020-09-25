@@ -3,12 +3,7 @@
     <h1 class="form-title">Welcome Back !</h1>
     <p class="form-subtitle">Enjoy yourself and be comfortable </p>
   </header>
-  {{#if msg}}
-  <p class="message {{msg.status}}">{{msg.text}}</p>
-  {{/if}}
-  {{#if error}}
-      <p class="error">{{error}}</p>
-    {{/if}}
+{{> flash_message}}
   <form method="post" action="/signin" id="form_user">
     <div class="form-item-wrapper flexed-item">
       <label for="email" class="label-ref label">Email</label>

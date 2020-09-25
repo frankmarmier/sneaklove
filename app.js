@@ -48,15 +48,15 @@ app.locals.site_url = process.env.SITE_URL;
 app.use(flash());
 
 
-app.use(function (req, res, next) {
-  res.locals.error_message = req.flash("error");
-  res.locals.success_message = req.flash("success");
-  next();
-});
+// app.use(function (req, res, next) {
+//   res.locals.error_message = req.flash("error");
+//   res.locals.success_message = req.flash("success");
+//   next();
+// });
 
 
 // CUSTOM MIDDLEWARES
-/*
+
 if (dev_mode === true) {
   app.use(require("./middlewares/devMode")); // triggers dev mode during dev phase
   app.use(require("./middlewares/debugSessionInfos")); // displays session debug
@@ -64,7 +64,7 @@ if (dev_mode === true) {
 
 app.use(require("./middlewares/exposeLoginStatus"));
 app.use(require("./middlewares/exposeFlashMessage"));
-*/
+
 // routers
 app.use("/", require("./routes/index"));
 app.use("/", require("./routes/auth"));

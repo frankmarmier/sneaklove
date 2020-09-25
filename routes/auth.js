@@ -12,14 +12,13 @@ router.get("/signin", async (req, res, next) => {
 router.post("/signin", async (req, res, next) => {
   const { email, password } = req.body;
   const foundUser = await User.findOne({ email: email });
-  console.log(foundUser);
   if (!foundUser) {
-    req.flash("error", "Invalid credentials");
+    req.flash("error", "Invalid credentials bolosse");
     res.redirect("/signin");
   } else {
     const isSamePassword = bcrypt.compareSync(password, foundUser.password);
     if (!isSamePassword) {
-      req.flash("error", "Invalid credentials");
+      req.flash("error", "Invalid credentials bolosse");
       res.redirect("/signin");
     } else {
       const userDocument = { ...foundUser };

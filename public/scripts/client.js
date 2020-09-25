@@ -17,6 +17,8 @@ function initiateFilter(id) {
       let getList = apiResponse.data.sneakers;
 
       let filterList = getList.filter(function (shoe) {
+       
+        console.log("input_" + shoe.id_tags, id);
         return "input_" + shoe.id_tags === id;
       });
 

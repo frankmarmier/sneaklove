@@ -60,18 +60,34 @@ router.get("/product-edit/:id", async (req, res, next) => {
   }
 });
 
-router.post("/prod-edit/:id", fileUploader.single("image"), async (req, res, next) => {
-  const updatedSneaker = req.body;
-  if (req.file) {
-    updatedSneaker.image = req.file.path;
+router.post(
+  "/prod-edit/:id",
+  fileUploader.single("image"),
+  async (req, res, next) => {
+    const updatedSneaker = req.body;
+    if (req.file) {
+      updatedSneaker.image = req.file.path;
+    }
+    console.log(updatedSneaker);
+    try {
+      const dbres = await Sneaker.findByIdAndUpdate(
+        req.params.id,
+        updatedSneaker
+      );
+      console.log(dbres);
+      res.redirect("/prod-manage");
+    } catch (err) {
+      next(err);
+    }
   }
-  console.log(updatedSneaker);
-  try{
-    const dbres = await Sneaker.findByIdAndUpdate(req.params.id, updatedSneaker)
-    console.log(dbres);
-    res.redirect("/prod-manage")
-  } catch(err) {
-    next(err)
+);
+
+router.get("/product-delete/:id", async (req, res, next) => {
+  try {
+    await Sneaker.findOneAndRemove(req.params.id);
+    res.redirect("/prod-manage");
+  } catch (error) {
+    next(error);
   }
-})
+});
 module.exports = router;

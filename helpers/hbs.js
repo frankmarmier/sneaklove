@@ -5,7 +5,7 @@ const hbs = require("hbs");
 // function below: add the ternary operator functionnality to .hbs files
 // usage : {{ternary true "yay" "nay "}} => prints yay
 // usage : {{ternary NaN "yay" "nay "}} => prints nay
-hbs.registerHelper("ternary", (test, yes, no) => (test ? yes : no));
+hbs.registerHelper("ternary", (test, yes, no) => {test ? yes : no});
 
 // add comparison operator feature to hbs templates
 /* 
@@ -62,5 +62,13 @@ hbs.registerHelper("compare", function(lvalue, rvalue, options) {
     return options.fn(this);
   } else {
     return options.inverse(this);
+  }
+});
+
+hbs.registerHelper('if_eq', function(a, b, opts) {
+  if (a == b) {
+      return opts.fn(this);
+  } else {
+      return opts.inverse(this);
   }
 });

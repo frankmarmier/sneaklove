@@ -2,11 +2,13 @@ const express = require("express");
 const router = express.Router();
 const Sneaker = require("../models/Sneaker");
 const fileUploader = require("../config/cloudinary");
+const TagModel = require("../models/Tag")
 
 router.get("/collection", async (req, res) => {
+  const tagRes = await TagModel.find();
   const dbResult = await Sneaker.find();
   console.log(dbResult);
-  res.render("products", { sneakers: dbResult });
+  res.render("products", { sneakers: dbResult, tags: tagRes });
 });
 
 router.get("/one-product/:id", async (req, res) => {

@@ -72,7 +72,7 @@ router.post(
     try {
       const dbres = await Sneaker.findByIdAndUpdate(
         req.params.id,
-        updatedSneaker,
+        updatedSneaker
       );
       console.log(dbres);
       res.redirect("/prod-manage");
@@ -84,7 +84,8 @@ router.post(
 
 router.get("/product-delete/:id", async (req, res, next) => {
   try {
-    await Sneaker.findOneAndRemove(req.params.id);
+    const dbResult = await Sneaker.findByIdAndRemove(req.params.id);
+    console.log(">>>>>>", dbResult);
     res.redirect("/prod-manage");
   } catch (error) {
     next(error);

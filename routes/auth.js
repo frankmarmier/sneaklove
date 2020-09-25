@@ -8,6 +8,32 @@ const salt = 10;*/
 router.get("/signin", async (req, res, next) => {
   res.render("signin");
 });
+
+router.get("/signup", async (req, res, next) => {
+  res.render("signup");
+});
+
+router.post("/signup", async (req, res, next) => {
+  try {
+    const newUser = req.body;
+
+    const foundUser = await User.findOne({ email: newUser.email });
+
+    if (foundUser) {
+      res.render("auth/signup.hbs", { error: "Email already taken" });
+    } else {
+      const hashedPassword = bcrypt.hashSync(newUser.password, salt);
+      newUser.password = hashedPassword;
+      const user = await User.create(newUser);
+      res.redirect("/auth/signin");
+    }
+  } catch (error) {
+    next(error);
+  }
+  //   res.render("auth/signup.hbs");
+});
+
+
 /*
 router.post("/signin", async (req, res, next) => {
   // DO something
@@ -42,29 +68,8 @@ router.post("/signin", async (req, res, next) => {
   }
 });
 
-router.get("/signup", async (req, res, next) => {
-  res.render("auth/signup.hbs");
-});
 
-router.post("/signup", async (req, res, next) => {
-  try {
-    const newUser = req.body;
 
-    const foundUser = await User.findOne({ email: newUser.email });
-
-    if (foundUser) {
-      res.render("auth/signup.hbs", { error: "Email already taken" });
-    } else {
-      const hashedPassword = bcrypt.hashSync(newUser.password, salt);
-      newUser.password = hashedPassword;
-      const user = await User.create(newUser);
-      res.redirect("/auth/signin");
-    }
-  } catch (error) {
-    next(error);
-  }
-  //   res.render("auth/signup.hbs");
-});
 
 router.get("/logout", async (req, res, next) => {
   console.log(req.session.currentUser);

@@ -34,7 +34,11 @@ router.get("/sneakers/men", async (req, res, next) => {
       return shoe.category === "men";
     });
 
-    res.render("products", { sneakers: filterDashShoes, tags: tagDocuments });
+    res.render("products", {
+      sneakers: filterDashShoes,
+      tags: tagDocuments,
+      scripts: ["client"],
+    });
   } catch (error) {
     next(error);
   }
@@ -48,7 +52,11 @@ router.get("/sneakers/women", async (req, res, next) => {
       return shoe.category === "women";
     });
 
-    res.render("products", { sneakers: filterDashShoes, tags: tagDocuments });
+    res.render("products", {
+      sneakers: filterDashShoes,
+      tags: tagDocuments,
+      scripts: ["client"],
+    });
   } catch (error) {
     next(error);
   }
@@ -62,7 +70,11 @@ router.get("/sneakers/kids", async (req, res, next) => {
       return shoe.category === "kids";
     });
 
-    res.render("products", { sneakers: filterDashShoes, tags: tagDocuments });
+    res.render("products", {
+      sneakers: filterDashShoes,
+      tags: tagDocuments,
+      scripts: ["client"],
+    });
   } catch (error) {
     next(error);
   }

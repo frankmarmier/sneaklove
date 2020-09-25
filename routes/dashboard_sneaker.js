@@ -54,7 +54,7 @@ router.get("/product-edit/:id", async (req, res, next) => {
   try {
     const tagDocuments = await Tag.find();
     const sneakerId = req.params.id;
-    dbresult = await Sneaker.findById(sneakerId).populate("Tag");
+    dbresult = await Sneaker.findById(sneakerId);
     Sneaker.findByIdAndUpdate(sneakerId);
     console.log(tagDocuments);
     res.render("product_edit", { sneaker: dbresult, tags: tagDocuments });

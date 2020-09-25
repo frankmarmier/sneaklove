@@ -1,3 +1,25 @@
+const getCatText = document.querySelector("#category-text");
+
+const newURL =
+  window.location.protocol +
+  "://" +
+  window.location.host +
+  "/" +
+  window.location.pathname;
+
+const pathArray = window.location.pathname.split("/");
+let segment_category = pathArray[2];
+
+if (segment_category === "men") {
+  segment_category += "'s";
+} else if (segment_category === "women") {
+  segment_category += "'s";
+} else if (segment_category === "collection") {
+  segment_category = "";
+} 
+getCatText.innerHTML = segment_category;
+
+
 const getCheckbox = document.querySelectorAll(".checkbox");
 
 const filterCheck = getCheckbox.forEach((check) => {

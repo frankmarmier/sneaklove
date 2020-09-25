@@ -43,6 +43,7 @@ app.use(
 );
 
 app.use("/", require("./routes/dashboard_sneaker"));
+app.use("/auth", require("./routes/auth"));
 
 // below, site_url is used in partials/shop_head.hbs to perform ajax request (var instead of hardcoded)
 app.locals.site_url = process.env.SITE_URL;

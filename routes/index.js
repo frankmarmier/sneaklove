@@ -12,12 +12,15 @@ router.get("/ajax", async (req, res, next) => {
   res.json({ sneakers: dashShoes });
 });
 
-
 router.get("/sneakers/collection", async (req, res, next) => {
   try {
     const dashShoes = await Sneaker.find();
     const tagDocuments = await Tag.find();
-    res.render("products", { sneakers: dashShoes, tags:  tagDocuments, scripts: ["client"]});
+    res.render("products", {
+      sneakers: dashShoes,
+      tags: tagDocuments,
+      scripts: ["client"],
+    });
   } catch (error) {
     next(error);
   }
@@ -31,7 +34,7 @@ router.get("/sneakers/men", async (req, res, next) => {
       return shoe.category === "men";
     });
 
-    res.render("products", { sneakers: filterDashShoes, tags:  tagDocuments});
+    res.render("products", { sneakers: filterDashShoes, tags: tagDocuments });
   } catch (error) {
     next(error);
   }
@@ -45,7 +48,7 @@ router.get("/sneakers/women", async (req, res, next) => {
       return shoe.category === "women";
     });
 
-    res.render("products", { sneakers: filterDashShoes, tags:  tagDocuments});
+    res.render("products", { sneakers: filterDashShoes, tags: tagDocuments });
   } catch (error) {
     next(error);
   }
@@ -59,7 +62,7 @@ router.get("/sneakers/kids", async (req, res, next) => {
       return shoe.category === "kids";
     });
 
-    res.render("products", { sneakers: filterDashShoes, tags:  tagDocuments});
+    res.render("products", { sneakers: filterDashShoes, tags: tagDocuments });
   } catch (error) {
     next(error);
   }
@@ -76,12 +79,12 @@ router.get("/one-product/:id", async (req, res, next) => {
   }
 });
 
-router.get("/signup", (req, res) => {
-  res.send("sneak");
-});
+// router.get("/signup", (req, res) => {
+//   res.send("sneak");
+// });
 
-router.get("/signin", (req, res) => {
-  res.send("love");
-});
+// router.get("/signin", (req, res) => {
+//   res.send("love");
+// });
 
 module.exports = router;

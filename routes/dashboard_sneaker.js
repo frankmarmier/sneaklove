@@ -4,9 +4,11 @@ const uploader = require("../config/cloudinary");
 const protectPrivateRoute = require("../middlewares/protectPrivateRoute");
 
 const Sneaker = require("../models/Sneaker");
+const Tag = require("../models/Tag");
 
-router.get("/create", protectPrivateRoute, (req, res, next) => {
-  res.render("products_add");
+router.get("/create", protectPrivateRoute, async (req, res, next) => {
+  const tags = await Tag.find();
+  res.render("products_add", { tags });
 });
 
 router.get("/manage", protectPrivateRoute, async (req, res, next) => {
@@ -32,6 +34,16 @@ router.post("/create", uploader.single("image"), async (req, res, next) => {
     res.redirect("/sneakers/manage");
   } catch (error) {
     next(error);
+  }
+});
+
+router.post("/add-tag", async (req, res, next) => {
+  try {
+    const newTag = req.body;
+    await Tag.create(newTag);
+    res.redirect("/sneakers/create");
+  } catch (err) {
+    next(err);
   }
 });
 

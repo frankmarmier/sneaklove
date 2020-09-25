@@ -25,7 +25,7 @@ router.get("/men", async (req, res, next) => {
     const sneakers = await Sneaker.find({ category: "men" });
     const tags = await Tag.find();
     const category = "men";
-    res.render("products", { sneakers, category, tags, js: ["client"], });
+    res.render("products", { sneakers, category, tags, js: ["client"] });
   } catch (err) {
     next(err);
   }
@@ -53,12 +53,11 @@ router.get("/kids", async (req, res, next) => {
   }
 });
 
-router.get("/tag-filter/:tag", async (req, res, next) => {
-  const tagID = req.params.tag;
-  console.log(tagID);
-  const filteredSneakers = await Sneaker.find({ id_tags: tagID });
-  console.log(filteredSneakers);
-  res.send(filteredSneakers);
+router.get("/tag-filter/", async (req, res, next) => {
+  const tagIDs = req.query.tag;
+  const sneakers = await Sneaker.find({ id_tags: tagIDs });
+  res.json(sneakers);
+  console.log(sneakers);
 });
 
 module.exports = router;

@@ -11,16 +11,25 @@ tagListInput.forEach((tag) => {
       allTags.push(tagId);
       console.log(allTags);
     } else {
-      allTags.filter((tag) => tag != tagId);
+      allTags = allTags.filter((tag) => tag != tagId);
       console.log(allTags);
     }
+    filterProducts(allTags);
   });
 });
 
-function filterProducts(tagID) {
+function filterProducts(allTags) {
   axios
-    .get(`/sneakers/tag-filter/${tagID}`)
-    .then((filteredSneakers) => displaySneakers(filteredSneakers.data))
+    // .get(`/sneakers/tag-filter/${tagID}`)
+    .get(`/sneakers/tag-filter/`, {
+      params: {
+        tag: allTags,
+      },
+    })
+    .then((filteredSneakers) => {
+      console.log(filteredSneakers);
+      displaySneakers(filteredSneakers.data);
+    })
     .catch((error) => console.log(error));
 }
 
@@ -38,10 +47,10 @@ function displaySneakers(sneakers) {
   });
 }
 
-tagInput.forEach((tag) => {
-  tag.addEventListener("change", () => {
-    const tagID = tag.dataset.tagId;
-    console.log(tagID);
-    filterProducts(tagID);
-  });
-});
+// tagInput.forEach((tag) => {
+//   tag.addEventListener("change", () => {
+//     const tagID = tag.dataset.tagId;
+//     console.log(tagID);
+//     filterProducts(tagID);
+//   });
+// });

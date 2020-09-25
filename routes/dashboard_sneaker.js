@@ -44,12 +44,10 @@ router.post("/edit/:id", protectPrivateRoute, async (req, res, next) => {
     await Sneaker.findByIdAndUpdate(req.params.id, updatedSneaker);
     res.redirect("/dashboard");
   } catch (error) {
-    next(error); // Sends us to the error handler middleware in app.js if an error occurs
+    next(error); 
   }
-  //
 });
 
-// D
 router.get("/product-delete/:id", protectPrivateRoute, async (req, res, next) => {
   try {
     console.log(req.params);

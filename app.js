@@ -48,11 +48,8 @@ app.locals.site_url = process.env.SITE_URL;
 app.use(flash());
 
 
-// app.use(function (req, res, next) {
-//   res.locals.error_message = req.flash("error");
-//   res.locals.success_message = req.flash("success");
-//   next();
-// });
+
+
 
 
 // CUSTOM MIDDLEWARES

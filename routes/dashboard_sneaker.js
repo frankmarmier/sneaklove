@@ -3,6 +3,7 @@ const router = new express.Router(); // create an app sub-module (router)
 const Sneaker = require("../models/Sneaker");
 const Tag = require("../models/Tag");
 const uploader = require("../config/cloudinary");
+const protectPrivateRoute = require("../middlewares/protectPrivateRoute");
 
 router.get("/sneakers/men", async (req, res, next) => {
   try {
@@ -31,7 +32,7 @@ router.get("/sneakers/kids", async (req, res, next) => {
   }
 });
 
-router.get("/prod-add", async(req, res, next) => {
+router.get("/prod-add", protectPrivateRoute, async(req, res, next) => {
   try {
     const tags = await Tag.find()
     res.render("products_add", {tags});
@@ -54,7 +55,7 @@ router.post("/prod-add", uploader.single("image"), async (req, res, next) => {
   }
 });
 
-router.get("/prod-manage", async (req, res, next) => {
+router.get("/prod-manage", protectPrivateRoute, async (req, res, next) => {
   try {
     
     const sneakers = await Sneaker.find();
@@ -64,7 +65,7 @@ router.get("/prod-manage", async (req, res, next) => {
   }
 });
 
-router.get("/:id/delete", async (req, res, next) => {
+router.get("/:id/delete", protectPrivateRoute, async (req, res, next) => {
   try {
     const sneakerId = req.params.id;
     await Sneaker.findByIdAndDelete(sneakerId);
@@ -74,7 +75,7 @@ router.get("/:id/delete", async (req, res, next) => {
   }
 });
 
-router.get("/product-edit/:id", async (req, res, next) => {
+router.get("/product-edit/:id", protectPrivateRoute, async (req, res, next) => {
   try {
     const tags = await Tag.find();
     const sneakerId = req.params.id;

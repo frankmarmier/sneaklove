@@ -1,5 +1,3 @@
-throw new Error("wax on, wax off");
-
 require("dotenv").config();
 require("./config/mongodb"); // database initial setup
 require("./helpers/hbs"); // utils for hbs templates
@@ -7,9 +5,10 @@ require("./helpers/hbs"); // utils for hbs templates
 // base dependencies
 const express = require("express");
 const app = express();
+const path = require("path")
 const cookieParser = require("cookie-parser");
 const flash = require("connect-flash");
-const hbo = require("hbs");
+const hbs = require("hbs");
 const mongoose = require("mongoose");
 const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
@@ -21,11 +20,12 @@ app.use(logger("dev"));
 
 // initial config
 app.set("view engine", "hbs");
-app.set("views", __dirname + "/view");
+app.set("views", __dirname + "/views");
 app.use(express.static("public"));
 hbs.registerPartials(__dirname + "/views/partials");
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+app.use(flash());
 app.use(cookieParser());
 
 // SESSION SETUP
@@ -45,7 +45,6 @@ app.use(
 // below, site_url is used in partials/shop_head.hbs to perform ajax request (var instead of hardcoded)
 app.locals.site_url = process.env.SITE_URL;
 
-app.use(flash());
 
 // CUSTOM MIDDLEWARES
 
@@ -59,5 +58,7 @@ app.use(require("./middlewares/exposeFlashMessage"));
 
 // routers
 app.use("/", require("./routes/index"));
+app.use("/sneakers", require("./routes/sneakers"));
+app.use(require("./routes/auth"))
 
 module.exports = app;

@@ -3,11 +3,11 @@
   {{!-- CATEGORY --}}
   <aside class="tag-wrapper">
     <h4 class="tag-title">All Tags</h4>
-    <ul id="tag_list" class="tag-list" data-category="{{category}}">
+    <ul id="tag_list" class="tag-list" data-category="{{tags._id}}">
       {{#each tags}}
       <li class="tag-list-item">
         <input id="input_{{this._id}}" type="checkbox" data-tag-id="{{this._id}}" class="checkbox" />
-        <label for="input_{{this._id}}">{{this.name}}</label>
+        <label for="input_{{this._id}}">{{this.label}}</label>
       </li>
       {{/each}}
     </ul>
@@ -33,9 +33,15 @@
     <p>Sorry, no sneakers yet !</p>
     {{/unless}}
     <div id="products_grid" class="products-grid flexed-item">
+    {{!-- {{#if_eq sneakers.id_tags tags._id}} --}}
       {{#each sneakers}}
       {{> sneaker_mini }}
       {{/each}}
+    {{!-- else --}}
+      {{#each sneakers}}
+      {{> sneaker_mini }}
+      {{/each}}
+      {{!-- /if_eq --}}
     </div>
   </section>
 </div>

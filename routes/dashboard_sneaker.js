@@ -1,6 +1,7 @@
 const express = require("express"); // import express in this module
 const router = new express.Router(); // create an app sub-module (router)
 const Sneaker = require("../models/Sneaker");
+const Tag = require("../models/Tag");
 
 router.get("/sneakers/men", async (req, res, next) => {
   try {
@@ -29,8 +30,13 @@ router.get("/sneakers/kids", async (req, res, next) => {
   }
 });
 
-router.get("/prod-add", (req, res) => {
-  res.render("products_add");
+router.get("/prod-add", async(req, res, next) => {
+  try {
+    const tags = await Tag.find()
+    res.render("products_add", {tags});
+  } catch (error) {
+    next(error);
+  }
 });
 
 router.post("/prod-add", async (req, res, next) => {
@@ -64,9 +70,10 @@ router.get("/:id/delete", async (req, res, next) => {
 
 router.get("/product-edit/:id", async (req, res, next) => {
   try {
+    const tags = await Tag.find();
     const sneakerId = req.params.id;
     const sneaker = await Sneaker.findById(sneakerId);
-    res.render("product_edit", { sneaker });
+    res.render("product_edit", { sneaker, tags });
   } catch (error) {
     next(error);
   }
@@ -81,6 +88,16 @@ router.post ("/prod-edit/:id", async (req, res, next)=>{
   } catch (error) {
     next(error);
     
+  }
+});
+
+router.post("/createTag", async(req, res, next) => {
+  try {
+    const newTag = Tag.create(req.body);
+    res.redirect("/prod-add");
+  }
+  catch(error) {
+    next(error);
   }
 })
 

@@ -8,7 +8,7 @@ const Schema = mongoose.Schema;
         description: String,
         price: Number,
         category: {type: String, enum: ["men", "women", "kids"] },
-        id_tags: [String]
+        id_tags: { type: Schema.Types.ObjectId, ref: "Tag" }
     
     });
     const Sneaker = mongoose.model("Sneaker", sneakerSchema);

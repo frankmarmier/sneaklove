@@ -73,5 +73,10 @@ router.post("/prod-edit/:id", fileUploader.single("image"), async (req, res, nex
   } catch(err) {
     next(err)
   }
-})
+});
+
+router.get("/product-delete/:id", async (req, res, next) => {
+  await Sneaker.findOneAndRemove(req.params.id)
+  res.redirect("/prod-manage")
+});
 module.exports = router;

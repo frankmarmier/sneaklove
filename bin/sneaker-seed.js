@@ -7,6 +7,8 @@ const sneakers = [
   {
     name: "Air Jordan",
     ref: "abcd",
+    image:
+      "https://robbreport.com/wp-content/uploads/2019/12/dior-air-jordan-sneaker-collaboration-main.jpg",
     size: 42,
     description: "Shoe",
     price: 39.99,
@@ -16,6 +18,8 @@ const sneakers = [
   {
     name: "Stan Smith",
     ref: "edgh",
+    image:
+      "https://images-na.ssl-images-amazon.com/images/I/61rigQzeh7L._AC_UX500_.jpg",
     size: 39,
     description: "Shoe",
     price: 79.99,
@@ -25,6 +29,8 @@ const sneakers = [
   {
     name: "Converse",
     ref: "ghtkylk",
+    image:
+      "https://images-na.ssl-images-amazon.com/images/I/61ibZw5F4bL._AC_UX395_.jpg",
     size: 45,
     description: "Shoe",
     price: 56.99,

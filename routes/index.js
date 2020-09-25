@@ -8,7 +8,10 @@ router.get("/", (req, res) => {
 });
 
 router.get("/ajax", async (req, res, next) => {
+  //console.log(req.params);
+  //const dashShoes = await Sneaker.find({id_tags: req.params });
   const dashShoes = await Sneaker.find();
+
   res.json({ sneakers: dashShoes });
 });
 

@@ -1,3 +1,5 @@
+import ApiHandler from "./apiHandler.js";
+
 const getCatText = document.querySelector("#category-text");
 
 const newURL =
@@ -16,32 +18,32 @@ if (segment_category === "men") {
   segment_category += "'s";
 } else if (segment_category === "collection") {
   segment_category = "";
-} 
+}
 getCatText.innerHTML = segment_category;
 
-
 const getCheckbox = document.querySelectorAll(".checkbox");
+const idArr = [];
 
 const filterCheck = getCheckbox.forEach((check) => {
   check.addEventListener("change", function () {
     if (this.checked) {
-      initiateFilter(this.id);
+      idArr.push(this.getAttribute("data-tag-id"));
+      initiateFilter(idArr);
     } else {
       fullList();
     }
+   // console.log(idArr);
   });
 });
 
-function initiateFilter(id) {
+function initiateFilter(idArr) {
   axios
     .get("http://localhost:3000/ajax")
     .then((apiResponse) => {
       let getList = apiResponse.data.sneakers;
 
       let filterList = getList.filter(function (shoe) {
-       
-        console.log("input_" + shoe.id_tags, id);
-        return "input_" + shoe.id_tags === id;
+        return idArr.includes(shoe.id_tags);
       });
 
       const getGrid = document.querySelector("#products_grid");

@@ -42,8 +42,22 @@ router.post(
   }
 );
 
-router.get("/prod-manage", (req, res) => {
-  res.render("products_manage");
+router.get("/prod-manage", async (req, res, next) => {
+  try {
+    const dbResult = await Sneaker.find();
+    res.render("products_manage", { sneakers: dbResult });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get("/product-edit/:id", async (req, res, next) => {
+  try {
+    const dbResult = await Sneaker.findById(req.params.id);
+    res.render("product_edit", { sneakers: dbResult });
+  } catch (error) {
+    next(error);
+  }
 });
 
 module.exports = router;

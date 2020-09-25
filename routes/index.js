@@ -92,4 +92,13 @@ router.get("/product-delete/:id", async (req, res, next) => {
   }
 });
 
+router.post("/add-tag", async (req, res, next) => {
+  try {
+    const dbres = await TagModel.create(req.body);
+    res.redirect("/prod-add")
+  } catch(err) {
+    next(err)
+  }
+})
+
 module.exports = router;

@@ -2,6 +2,7 @@ const express = require("express"); // import express in this module
 const router = new express.Router(); // create an app sub-module (router)
 const Sneaker = require("../models/Sneaker");
 const Tag = require("../models/Tag");
+const uploader = require("../config/cloudinary");
 
 router.get("/sneakers/men", async (req, res, next) => {
   try {
@@ -39,9 +40,14 @@ router.get("/prod-add", async(req, res, next) => {
   }
 });
 
-router.post("/prod-add", async (req, res, next) => {
+router.post("/prod-add", uploader.single("image"), async (req, res, next) => {
+  
+  const newSneakers = req.body;
+  if (req.file) {
+    newSneakers.image = req.file.path;
+  }
   try {
-    const newSneaker = await Sneaker.create(req.body);
+    const newSneaker = await Sneaker.create(newSneakers);
     res.redirect("/sneakers/collection");
   } catch (error) {
     next(error);

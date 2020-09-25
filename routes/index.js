@@ -3,6 +3,7 @@ const router = express.Router();
 const TagModel = require("../models/Tag");
 const Sneaker = require("../models/Sneaker");
 const fileUploader = require("../config/cloudinary");
+const { get } = require("mongoose");
 
 router.get("/", (req, res) => {
   res.render("index");
@@ -99,6 +100,13 @@ router.post("/add-tag", async (req, res, next) => {
   } catch(err) {
     next(err)
   }
+})
+
+router.get("/filter/:tag", async (req, res, next) => {
+  const tag = req.params.tag
+  console.log("this tag",tag)
+  const dbres = await Sneaker.find({id_tags: tag})
+  res.render("products", {sneakers: dbres})
 })
 
 module.exports = router;

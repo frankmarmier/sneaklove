@@ -30,7 +30,7 @@
     </div>
     <div class="form-item-wrapper flexed-item">
       <label for="sneaker-img" class="label-price label">Image</label>
-      <input id="sneaker-img" type="file" class="sneaker-price input">
+      <input id="sneaker-img" type="file" class="sneaker-price input" name="image">
     </div>
     <div class="form-item-wrapper flexed-item">
       <label for="category" class="label-main-cat label">Main category</label>
@@ -44,18 +44,18 @@
 
     <div  class="form-item-wrapper flexed-item">
       <label for="tags" class="label">Tags</label>
-      {{> form_tags_select}}
+      {{> form_tags_select }}
     </div>
     <button class="button-primary add-sneaker-btn">Add to collection</button>
   </form>
 
-  <div class="add-tag-form">
+  <form class="add-tag-form" action="/dashboard/tag-add" method="POST">
     <p id="add-tag-message" class="msg"></p>
     <h3 class="form-title">Add tags</h3>
     <div class="form-item-wrapper flexed-item">
       <label for="category-name" class="category-name label">Sneaker tag</label>
-      <input id="new_tag_name" type="text" class="input" placeholder="ex: Gangsta">
+      <input id="new_tag_name" type="text" class="input" placeholder="ex: Gangsta" name="label">
     </div>
     <button id="btn_new_tag" class="button-primary add-category-btn">Create this category</button>
-  </div>
+  </form>
 </div>

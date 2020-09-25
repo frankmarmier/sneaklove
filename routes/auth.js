@@ -70,12 +70,25 @@ router.post("/signin", async (req, res, next) => {
 
 
 
+<<<<<<< HEAD
+=======
+    if (foundUser) {
+      res.render("auth/signup.hbs", { error: "Email already taken" });
+    } else {
+      const hashedPassword = bcrypt.hashSync(newUser.password, salt);
+      newUser.password = hashedPassword;
+      const user = await User.create(newUser);
+      res.redirect("/auth/signin");
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+>>>>>>> 2f27c2932876fa1de63ec5759c9d864c023240d5
 
 router.get("/logout", async (req, res, next) => {
   console.log(req.session.currentUser);
   req.session.destroy(function (err) {
-    // cannot access session here
-    // console.log(req.session.currentUser);
     res.redirect("/auth/signin");
   });
 });

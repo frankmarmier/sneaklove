@@ -2,6 +2,7 @@ const express = require("express");
 const SneakerModel = require("../models/Sneaker");
 const router = express.Router();
 const uploader = require("../config/cloudinary");
+const TagModel = require("../models/Tag");
 
 router.get("/", async (req, res) => {
   res.render("index");
@@ -11,8 +12,13 @@ router.get("/home", (req, res) => {
   res.render("index");
 });
 
-router.get("/prod-add", (req, res) => {
-  res.render("products_add");
+router.get("/prod-add", async (req, res) => {
+  try {
+    const tags = await TagModel.find();
+    res.render("products_add", {tags} );
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 router.get("/prod-manage", async (req, res) => {
@@ -111,6 +117,15 @@ router.get("/signup", (req, res) => {
 
 router.get("/signin", (req, res) => {
   res.render("signin");
+});
+
+router.post("/createTag", async (req, res) => {
+  try {
+    const sneaker = await TagModel.create(req.body);
+    res.redirect("/prod-add");
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 module.exports = router;

@@ -1,6 +1,7 @@
 require("dotenv").config();
 const Sneaker = require("../models/Sneaker");
 const mongoose = require("mongoose");
+const router = require("../routes/auth");
 
 const sneakers = [
   {
@@ -49,3 +50,9 @@ mongoose
   .catch((error) => {
     console.log(error);
   });
+
+
+
+
+
+  router.post("/prod-add")

@@ -50,3 +50,21 @@ select:focus {
   color: rgb(151, 151, 151);
   font-size: 0.9rem;
 }
+
+@media only screen and (max-width: 600px) {
+  
+  body > div.big-container.product-manage-wrapper.flexed-item > form.add-product-form > button {
+    margin-bottom: 2rem;
+  }
+
+  .form-item-wrapper {
+    width: auto;
+  }
+  .big-container.product-manage-wrapper.flexed-item .add-tag-form {
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+  }
+}

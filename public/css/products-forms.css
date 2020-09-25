@@ -43,3 +43,16 @@ h3.form-title {
   border-radius: 0.5rem;
   margin-bottom: 0.5rem;
 }
+
+@media only screen and (max-width: 600px) {
+  .add-product-form, .edit-product-form {
+    width: 80%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  input, .select {
+    width: 80vw;
+}
+}

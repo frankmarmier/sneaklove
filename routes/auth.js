@@ -37,32 +37,22 @@ router.post("/signup", async (req, res, next) => {
 
 
 router.post("/signin", async (req, res, next) => {
-  // DO something
-  //   res.render("auth/signin.hbs");
+
   const { email, password } = req.body;
   const foundUser = await User.findOne({ email });
   console.log(foundUser);
   if (!foundUser) {
-    //   Display an error message telling the user that either the password
-    // or the email is wrong
-    //   res.redirect("/signup")
     req.flash("error", "Invalid credentials");
     res.redirect("/auth/signin");
-    // res.render("auth/signin.hbs", { error: "Invalid credentials" });
   } else {
     const isSamePassword = bcrypt.compareSync(password, foundUser.password);
     if (!isSamePassword) {
-      // Display an error message telling the user that either the password
-      // or the email is wrong
       req.flash("error", "Invalid credentials");
       res.redirect("/auth/signin");
-      // res.render("auth/signin.hbs", { error: "Invalid credentials" });
     } else {
-      //
-      // Authenticate the user...
       const userObject = foundUser.toObject();
-      delete userObject.password; // remove password before saving user in session
-      req.session.currentUser = userObject; // Stores the user in the session
+      delete userObject.password; 
+      req.session.currentUser = userObject; 
       req.flash("success", "Successfully logged in...");
       res.redirect("/sneakers/collection");
     }

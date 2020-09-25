@@ -88,3 +88,22 @@ h4.products-title {
   font-size: 0.9rem;
   margin-bottom: 0.5rem;
 }
+
+@media only screen and (max-width: 600px) {
+  
+  .main-content-products.flexed-item.big-container {
+    align-items: center;
+  }
+  
+  .main-content-products.flexed-item.big-container * {
+    width: 80vw;
+    text-align: center;
+  }
+
+  .main-content-products.flexed-item.big-container img {
+    width: 80%;
+    margin: auto;
+  }
+
+
+}

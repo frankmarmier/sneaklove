@@ -11,8 +11,11 @@
             <span class="logo-item circle"></span>
             <h2 class="logo-item">SNEAKLOVE</h2>
           </a>
+          <div id="burger-menu"class="burger-menu flexed.item">
+            <i class="fas fa-bars"></i>
+          </div>
         </div>
-        <ul class="nav-link flexed-item">
+        <ul class="nav-link flexed-item hide">
           <li class="nav-item animated-link">
             <a href="/sneakers/collection">Collection</a>
           </li>
@@ -35,7 +38,7 @@
           {{/if}}
         </ul>
       </div>
-      <div class="flexed-item nav-end">
+      <div class="flexed-item nav-end hide">
         {{#unless isLoggedIn}}
         <a  href="/auth/signin" id="nav_login" class="button-ternary flexed-item nav-end-item">
           <span class="btn-text">Sign in</span>

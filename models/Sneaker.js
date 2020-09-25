@@ -11,7 +11,8 @@ const SneakerSchema = new mongoose.Schema({
   category: {
     type: String,
     enum: ["men", "women", "kids"],
-  }
+  },
+  image: String,
 });
 
 const SneakerModel = mongoose.model("sneakers", SneakerSchema);

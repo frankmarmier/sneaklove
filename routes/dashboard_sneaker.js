@@ -1,12 +1,11 @@
 const express = require("express"); // import express in this module
 const router = new express.Router(); // create an app sub-module (router)
 const uploader = require("../config/cloudinary");
-const protectPrivateRoute = require("../middlewares/protectPrivateRoute")
-
+const protectPrivateRoute = require("../middlewares/protectPrivateRoute");
 
 const Sneaker = require("../models/Sneaker");
 
-router.get("/create", (req, res, next) => {
+router.get("/create", protectPrivateRoute, (req, res, next) => {
   res.render("products_add");
 });
 
@@ -19,9 +18,15 @@ router.get("/manage", protectPrivateRoute, async (req, res, next) => {
   }
 });
 
-router.post("/create", protectPrivateRoute, async (req, res, next) => {
+router.post("/create", uploader.single("image"), async (req, res, next) => {
+  const newSneaker = req.body;
+
+  if (req.file) {
+    newSneaker.image = req.file.path;
+    console.log(newSneaker.image);
+  }
+
   try {
-    const newSneaker = req.body;
     console.log(newSneaker);
     await Sneaker.create(newSneaker);
     res.redirect("/sneakers/manage");
@@ -46,7 +51,7 @@ router.get("/:id/edit", protectPrivateRoute, async (req, res, next) => {
   res.render("product_edit", { selectedSneaker });
 });
 
-router.post("/:id/edit", protectPrivateRoute, async (req, res, next) => {
+router.post("/:id/edit", async (req, res, next) => {
   try {
     const sneakerId = req.params.id;
     const newSneakerValue = req.body;

@@ -22,7 +22,6 @@ router.post("/signin", async (req, res, next) => {
     if (!isSamePassword) {
       res.render("signin", {error: "Invalid credentials"});
     } else {
-      const userDocument = { ...foundUser };
       const userObject = foundUser.toObject();
       delete userObject.password; 
       req.session.currentUser = userObject; 

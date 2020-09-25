@@ -19,7 +19,7 @@ router.get("/home", (req, res) => {
 router.get("/prod-add", async (req, res) => {
   try {
     const tags = await TagModel.find();
-    res.render("products_add", {tags} );
+    res.render("products_add", { tags });
   } catch (err) {
     console.log(err);
   }
@@ -50,7 +50,7 @@ router.post("/prod-add", uploader.single("image"), async (req, res, next) => {
 router.get("/sneakers/collection", async (req, res) => {
   try {
     const sneakers = await SneakerModel.find();
-     const tags = await TagModel.find();
+    const tags = await TagModel.find();
     console.log("this is sneakers" + sneakers);
     res.render("products", { sneakers: sneakers, tags: tags });
   } catch (error) {
@@ -144,7 +144,6 @@ router.get("/signin", (req, res) => {
   res.render("signin");
 });
 
-
 router.post("/signin", async (req, res, next) => {
   const { email, password } = req.body;
   const foundUser = await UserModel.findOne({ email: email });
@@ -161,8 +160,8 @@ router.post("/signin", async (req, res, next) => {
       const userDocument = { ...foundUser };
       console.log(userDocument);
       const userObject = foundUser.toObject();
-      delete userObject.password; 
-      req.session.currentUser = userObject; 
+      delete userObject.password;
+      req.session.currentUser = userObject;
       req.flash("success", "Successfully logged in...");
       res.redirect("/sneakers/collection");
     }
@@ -176,6 +175,15 @@ router.post("/createTag", async (req, res) => {
   } catch (err) {
     console.log(err);
   }
+});
+
+router.get("/logout", async (req, res, next) => {
+  console.log(req.session.currentUser);
+  req.session.destroy(function (err) {
+    // cannot access session here
+    // console.log(req.session.currentUser);
+    res.redirect("/signin");
+  });
 });
 
 module.exports = router;

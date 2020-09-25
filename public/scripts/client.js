@@ -22,6 +22,8 @@ function initiateFilter(id) {
 
       const getGrid = document.querySelector("#products_grid");
       getGrid.innerHTML = "";
+      const getCount = document.querySelector("#products_count");
+      getCount.innerHTML = `(${filterList.length})`;
       for (const shoe of filterList) {
         const oneSneaker = document.createElement("a");
         oneSneaker.setAttribute("href", `/one-product/${shoe._id}`);
@@ -50,6 +52,8 @@ function fullList() {
 
       const getGrid = document.querySelector("#products_grid");
       getGrid.innerHTML = "";
+      const getCount = document.querySelector("#products_count");
+      getCount.innerHTML = `(${getList.length})`;
       for (const shoe of getList) {
         const oneSneaker = document.createElement("a");
         oneSneaker.setAttribute("href", `/one-product/${shoe._id}`);

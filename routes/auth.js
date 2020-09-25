@@ -20,7 +20,7 @@ router.post("/signup", async (req, res, next) => {
     const foundUser = await User.findOne({ email: newUser.email });
     console.log('2nd', foundUser)
     if (foundUser) {
-      req.flash(["error"], "Email already taken");
+      req.flash("error", "Email already taken");
       res.render("signup");
     } else {
       const hashedPassword = bcrypt.hashSync(newUser.password, salt);

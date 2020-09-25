@@ -33,7 +33,7 @@ router.get("/", protectPrivateRoute, async (req, res) => {
 // U
 router.get("/product-edit/:id", protectPrivateRoute, async (req, res, next) => {
   res.render("product_edit", {
-    sneaker: await Sneaker.findById(req.params.id),
+    sneaker: await Sneaker.findById(req.params.id).populate('Tag'),
     tags: await Tag.find(),
   });
 });

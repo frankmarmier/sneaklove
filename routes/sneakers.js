@@ -20,39 +20,6 @@ router.get("/collection", async (req, res, next) => {
   }
 });
 
-router.get("/men", async (req, res, next) => {
-  try {
-    const sneakers = await Sneaker.find({ category: "men" });
-    const tags = await Tag.find();
-    const category = "men";
-    res.render("products", { sneakers, category, tags, js: ["client"] });
-  } catch (err) {
-    next(err);
-  }
-});
-
-router.get("/women", async (req, res, next) => {
-  try {
-    const sneakers = await Sneaker.find({ category: "women" });
-    const tags = await Tag.find();
-    const category = "women";
-    res.render("products", { sneakers, category, tags, js: ["client"] });
-  } catch (err) {
-    next(err);
-  }
-});
-
-router.get("/kids", async (req, res, next) => {
-  try {
-    const sneakers = await Sneaker.find({ category: "kids" });
-    const tags = await Tag.find();
-    const category = "kids";
-    res.render("products", { sneakers, category, tags, js: ["client"] });
-  } catch (err) {
-    next(err);
-  }
-});
-
 router.get("/tag-filter/", async (req, res, next) => {
   const tagIDs = req.query.tag;
   const sneakers = await Sneaker.find({ id_tags: tagIDs });
@@ -63,5 +30,22 @@ router.get("/tag-filter/", async (req, res, next) => {
     res.json(sneakers);
   }
 });
+
+router.get("/:cat", async (req, res, next) => {
+  console.log(req.params);
+  try {
+    const sneakers = await Sneaker.find({ category: req.params.cat });
+    const tags = await Tag.find();
+    res.render("products", {
+      sneakers,
+      tags,
+      js: ["client"],
+    });
+  } catch (err) {
+    next(err);
+  }
+});
+
+
 
 module.exports = router;

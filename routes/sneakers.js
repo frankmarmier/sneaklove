@@ -56,8 +56,12 @@ router.get("/kids", async (req, res, next) => {
 router.get("/tag-filter/", async (req, res, next) => {
   const tagIDs = req.query.tag;
   const sneakers = await Sneaker.find({ id_tags: tagIDs });
-  res.json(sneakers);
-  console.log(sneakers);
+  if (sneakers.length === 0) {
+    const allSneakers = await Sneaker.find();
+    res.json(allSneakers);
+  } else {
+    res.json(sneakers);
+  }
 });
 
 module.exports = router;

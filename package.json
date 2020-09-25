@@ -13,6 +13,7 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-session": "^1.17.0",
+    "flash": "^1.1.0",
     "hbs": "^4.1.1",
     "moment": "^2.26.0",
     "mongoose": "^5.8.10",

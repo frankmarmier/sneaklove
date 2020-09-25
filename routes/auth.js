@@ -2,13 +2,13 @@ const express = require("express");
 const router = new express.Router();
 const UserModel = require("../models/User");
 const bcrypt = require("bcrypt");
-const { find } = require("../models/User");
+const exposeFlashMessage = require("../middlewares/exposeFlashMessage");
 
 const salt = 10;
 
 
 
-router.post("/signup", async (req, res, next) => {
+router.post("/signup", exposeFlashMessage, async(req, res, next) => {
     try {
     
     const newUser = req.body;
@@ -17,21 +17,19 @@ router.post("/signup", async (req, res, next) => {
     const foundUser = await UserModel.findOne({email: newUser.email})
         console.log(">>>foundUser>>>",foundUser)
     if (foundUser) {
-        res.render("signup.hbs")
-        console.log("toto")
+        console.log("titi");
+        req.flash("error", "email already exists")
+        res.redirect("/signup")
     } else {
         const hashPassword = bcrypt.hashSync(newUser.password, salt);
         console.log(hashPassword)
-        console.log("toto1")
         newUser.password = hashPassword;
 
-        // console.log("toto2")
+
 
         const user = await UserModel.create(newUser);
-        // console.log("toto3")
 
         console.log(user);
-        // console.log("toto4")
 
         res.redirect("/signin");
     }

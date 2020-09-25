@@ -1,6 +1,7 @@
 const express = require("express");
 const SneakerModel = require("../models/Sneaker");
 const router = express.Router();
+const uploader = require("../config/cloudinary");
 
 router.get("/", async (req, res) => {
   res.render("index");
@@ -15,7 +16,6 @@ router.get("/prod-add", (req, res) => {
 });
 
 router.get("/prod-manage", async (req, res) => {
-  console.log("totooooooooooo");
   try {
     const sneakers = await SneakerModel.find();
     res.render("products_manage", { sneakers: sneakers });
@@ -24,15 +24,17 @@ router.get("/prod-manage", async (req, res) => {
   }
 });
 
-router.post("/prod-add", (req, res, next) => {
-  console.log(req.body);
-  SneakerModel.create(req.body)
-    .then((dbRes) => {
-      res.redirect("/sneakers/collection");
-    })
-    .catch((dbErr) => {
-      next(err);
-    });
+router.post("/prod-add", uploader.single("image"), async (req, res, next) => {
+  try {
+    const newSneaker = req.body;
+    if (req.file) {
+      newSneaker.image = req.file.path;
+    }
+    const sneaker = await SneakerModel.create(newSneaker);
+    res.redirect("/sneakers/collection");
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 router.get("/sneakers/collection", async (req, res) => {
@@ -96,7 +98,7 @@ router.post("/product-edit/:id/edit", async (req, res) => {
 
 router.get("/sneakers/:cat", async (req, res) => {
   try {
-    const sneakers = await SneakerModel.find({ category: req.params.cat });
+    const sneakers = await SneakerModel.find({ category: req.params.cat }); //*selecting each cat enum
     res.render("products", { sneakers: sneakers });
   } catch (err) {
     console.log(err);

@@ -5,6 +5,6 @@ const TagSchema = new Schema({
 	label: String	
 })
 
-const Tag = mongoose.model('Tag', TagSchema)
+const Tag = mongoose.model('Tag', TagSchema);
 
-module.exports = Tag
+module.exports = Tag;
